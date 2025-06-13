@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI onOpen="onOpen" onClose="onClose" onCreate="onCreate">
+	<GuiElement profile="newLayer"/>
+	<Bitmap profile="cl_dialogFullscreenBg" id="dialogBg"/>
+	<GuiElement profile="cl_customLogoGizmoBg" id="dialogElement" width="300px" height="500px">
+		<ThreePartBitmap profile="fs25_dialogBgMiddleSmall"/>
+		<ThreePartBitmap profile="fs25_dialogBgTopSmall"/>
+		<ThreePartBitmap profile="fs25_dialogBgBottom"/>
+		
+		<GuiElement profile="fs25_dialogContentContainer">
+
+			<ScrollingLayout profile="cl_customLogoGizmoScrollingLayout" id="scrollingLayout" onScroll="onScrollLayoutScroll">
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_position"/>
+
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionX"/>
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionY"/>
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionZ"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_scale"/>
+
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionSX"/>
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionSY"/>
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionSZ"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_rotation"/>
+
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionRX"/>
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionRY"/>
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionRZ"/>
+				
+			</ScrollingLayout>
+
+
+			<ThreePartBitmap profile="fs25_listSliderBox" position="5px 0px" absoluteSizeOffset="0px 5px" pivot="1 1">
+				<Slider profile="fs25_listSlider" dataElementId="scrollingLayout" id="configSlider"/>
+			</ThreePartBitmap>
+
+		</GuiElement>
+		
+		<BoxLayout profile="fs25_dialogButtonBox">
+			<Button profile="buttonOK" text="$l10n_button_ok" onClick="onClickOk"/>
+		</BoxLayout>
+	</GuiElement>
+
+	<GUIProfiles>
+		<Profile name="cl_customLogoGizmoScrollingLayout" extends="emptyPanel" with="anchorStretchingYCenter">
+			<flowDirection value="vertical"/>
+			<autoValidateLayout value="false"/>
+		</Profile>
+		<Profile name="cl_customLogoGizmoBg" extends="infoDialogBg" with="pivotMiddleRight">
+		</Profile>
+		<Profile name="cl_dialogFullscreenBg" extends="baseReference" with="anchorStretchingYStretchingX">
+			<imageColor value="$preset_colorTransparent"/>
+		</Profile>
+	</GUIProfiles>
+
+</GUI>

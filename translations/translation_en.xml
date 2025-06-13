@@ -1,0 +1,11 @@
+<l10n>
+	<texts>
+
+		<text name="cl_position" text="Position"/>
+		<text name="cl_scale" text="Scale"/>
+		<text name="cl_rotation" text="Rotation"/>
+		<text name="cl_customLogo" text="Custom Logo"/>
+		<text name="cl_moveLogo" text="Move Logo"/>
+
+	</texts>
+</l10n>

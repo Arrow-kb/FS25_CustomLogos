@@ -1,0 +1,5 @@
+<GUIProfiles>
+	<Profile name="clButtonMenuExtra2" extends="fs25_wideButton" with="touchButton">
+		<inputAction value="MENU_EXTRA_2"/>
+	</Profile>
+</GUIProfiles>

@@ -1,0 +1,31 @@
+<modDesc descVersion="99">
+    <author>Arrow</author>
+    <version>1.0.0.0</version>
+    <title>
+        <en>Custom Logos</en>
+        <de>Benutzerdefinierte Logos</de>
+        <fr>Logos Personnalisés</fr>
+    </title>
+    <description>
+        <en>
+    <![CDATA[ This mod allows you to put a custom image onto any vehicle using a simple custom in-game file explorer when buying a new vehicle at the shop, in order to put your own logo on your vehicles. Images can be moved, scaled and rotated accordingly. Not multiplayer compatible as files must be local. ]]>
+</en>
+<de>
+    <![CDATA[ Mit diesem Mod können Sie beim Kauf eines neuen Fahrzeugs im Shop mithilfe eines einfachen benutzerdefinierten Datei-Explorers im Spiel ein beliebiges Bild auf jedes Fahrzeug übertragen, um Ihre Fahrzeuge mit Ihrem eigenen Logo zu versehen. Die Bilder können entsprechend verschoben, skaliert und gedreht werden. Nicht mit dem Mehrspielermodus kompatibel, da die Dateien lokal gespeichert sein müssen. ]]>
+</de>
+<fr>
+    <![CDATA[ Ce mod vous permet d'apposer une image personnalisée sur n'importe quel véhicule à l'aide d'un simple explorateur de fichiers intégré au jeu lorsque vous achetez un nouveau véhicule dans la boutique, afin d'apposer votre propre logo sur vos véhicules. Les images peuvent être déplacées, redimensionnées et pivotées à votre guise. Non compatible avec le mode multijoueur, car les fichiers doivent être stockés localement. ]]>
+</fr>
+    </description>
+    <iconFilename>icon_CustomLogos.dds</iconFilename>
+    <multiplayer supported="false"/>
+	<extraSourceFiles>
+		<sourceFile filename="src/gui/CustomLogoGizmoDialog.lua"/>
+		<sourceFile filename="src/gui/FileExplorerDialog.lua"/>
+		<sourceFile filename="src/gui/ShopConfigScreen.lua"/>
+		<sourceFile filename="src/shop/BuyVehicleData.lua"/>
+		<sourceFile filename="src/vehicles/Vehicle.lua"/>
+		<sourceFile filename="src/FSBaseMission.lua"/>
+	</extraSourceFiles>
+	<l10n filenamePrefix="translations/translation"/>
+</modDesc>

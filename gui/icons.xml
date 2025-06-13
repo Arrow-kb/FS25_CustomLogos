@@ -1,0 +1,12 @@
+<texture>
+	<meta>
+		<filename>icons.png</filename>
+		<size width="1024" height="1024"/>
+	</meta>
+	<slices>
+		<slice id="folder" uvs="0px 0px 512px 512px"/>
+		<slice id="png" uvs="512px 0px 512px 512px"/>
+		<slice id="jpg" uvs="0px 512px 512px 512px"/>
+		<slice id="dds" uvs="512px 512px 512px 512px"/>
+	</slices>
+</texture>
