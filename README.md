@@ -2,7 +2,7 @@
 
 This mod allows you to put a custom image onto any vehicle using a simple custom in-game file explorer when buying a new vehicle at the shop, in order to put your own logo on your vehicles. Images can be moved, scaled and rotated accordingly.
 
-Not multiplayer compatible - most likely never will be
+Not multiplayer compatible - most likely never will be, out of my control
 
 # Screenshots
 ![fsScreen_2025_06_13_11_08_04](https://github.com/user-attachments/assets/65711211-24d7-4a79-8aa8-03f3072d0917)
