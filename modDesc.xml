@@ -1,6 +1,6 @@
 <modDesc descVersion="99">
     <author>Arrow</author>
-    <version>1.0.0.0</version>
+    <version>1.1.0.0</version>
     <title>
         <en>Custom Logos</en>
         <de>Benutzerdefinierte Logos</de>
@@ -8,23 +8,55 @@
     </title>
     <description>
         <en>
-    <![CDATA[ This mod allows you to put a custom image onto any vehicle using a simple custom in-game file explorer when buying a new vehicle at the shop, in order to put your own logo on your vehicles. Images can be moved, scaled and rotated accordingly. Not multiplayer compatible as files must be local. ]]>
+    <![CDATA[ This mod allows you to put a custom image onto any vehicle using a simple custom in-game file explorer when buying a new vehicle at the shop or modifying an existing vehicle, in order to put your own logo on your vehicles. Images can be moved, scaled, rotated and mirrored accordingly.
+
+It is recommended to use a DDS image saved in BC3/DXT5 format, ideally with mip-maps. This can be done in most image manipulators such as Gimp or Paint.net.
+
+Multiplayer Information:
+
+For use on servers, it is required to upload the images to the server and to all clients, inside the modSettings folder under "FS25_CustomLogos". Any image outside the modSettings folder, or in a subfolder within this mod's modSettings folder, will not be recognised. An example image is provided in the modSettings folder after first loading the mod.
+
+Changelog:
+
+1.1.0.0
+- Added ability to mirror images
+- Added ability to add multiple images
+- Added ability to add images when editing existing vehicles
+- Added ability to remove images
+- Added multiplayer support
+]]>
 </en>
 <de>
-    <![CDATA[ Mit diesem Mod können Sie beim Kauf eines neuen Fahrzeugs im Shop mithilfe eines einfachen benutzerdefinierten Datei-Explorers im Spiel ein beliebiges Bild auf jedes Fahrzeug übertragen, um Ihre Fahrzeuge mit Ihrem eigenen Logo zu versehen. Die Bilder können entsprechend verschoben, skaliert und gedreht werden. Nicht mit dem Mehrspielermodus kompatibel, da die Dateien lokal gespeichert sein müssen. ]]>
+    <![CDATA[ Mit diesem Mod können Sie beim Kauf eines neuen Fahrzeugs im Shop oder beim Modifizieren eines bestehenden Fahrzeugs mithilfe eines einfachen benutzerdefinierten Datei-Explorers im Spiel ein benutzerdefiniertes Bild auf jedes Fahrzeug anwenden, um Ihre Fahrzeuge mit Ihrem eigenen Logo zu versehen. Bilder können entsprechend verschoben, skaliert, gedreht und gespiegelt werden.
+
+Es wird empfohlen, ein DDS-Bild im BC3/DXT5-Format zu verwenden, idealerweise mit Mip-Maps. Dies kann in den meisten Bildbearbeitungsprogrammen wie Gimp oder Paint.net durchgeführt werden.
+
+Informationen zum Mehrspielermodus:
+
+Für die Verwendung auf Servern müssen die Bilder auf den Server und alle Clients hochgeladen werden, und zwar in den Ordner „modSettings” unter „FS25_CustomLogos”. Bilder außerhalb des Ordners „modSettings” oder in einem Unterordner innerhalb des Ordners „modSettings” dieses Mods werden nicht erkannt. Ein Beispielbild finden Sie im Ordner „modSettings”, nachdem Sie den Mod zum ersten Mal geladen haben. ]]>
 </de>
 <fr>
-    <![CDATA[ Ce mod vous permet d'apposer une image personnalisée sur n'importe quel véhicule à l'aide d'un simple explorateur de fichiers intégré au jeu lorsque vous achetez un nouveau véhicule dans la boutique, afin d'apposer votre propre logo sur vos véhicules. Les images peuvent être déplacées, redimensionnées et pivotées à votre guise. Non compatible avec le mode multijoueur, car les fichiers doivent être stockés localement. ]]>
+    <![CDATA[ Ce mod vous permet d'ajouter une image personnalisée à n'importe quel véhicule à l'aide d'un simple explorateur de fichiers intégré au jeu lorsque vous achetez un nouveau véhicule dans la boutique ou modifiez un véhicule existant, afin d'apposer votre propre logo sur vos véhicules. Les images peuvent être déplacées, redimensionnées, pivotées et reflétées selon vos besoins.
+
+Il est recommandé d'utiliser une image DDS enregistrée au format BC3/DXT5, idéalement avec des mip-maps. Cela peut être fait dans la plupart des logiciels de manipulation d'images tels que Gimp ou Paint.net.
+
+Informations multijoueur :
+
+Pour une utilisation sur des serveurs, il est nécessaire de télécharger les images sur le serveur et sur tous les clients, dans le dossier modSettings sous « FS25_CustomLogos ». Toute image située en dehors du dossier modSettings ou dans un sous-dossier du dossier modSettings de ce mod ne sera pas reconnue. Un exemple d'image est fourni dans le dossier modSettings après le premier chargement du mod. ]]>
 </fr>
     </description>
     <iconFilename>icon_CustomLogos.dds</iconFilename>
-    <multiplayer supported="false"/>
+    <multiplayer supported="true"/>
 	<extraSourceFiles>
+		<sourceFile filename="src/events/ChangeVehicleConfigEvent.lua"/>
 		<sourceFile filename="src/gui/CustomLogoGizmoDialog.lua"/>
 		<sourceFile filename="src/gui/FileExplorerDialog.lua"/>
 		<sourceFile filename="src/gui/ShopConfigScreen.lua"/>
+		<sourceFile filename="src/gui/WorkshopScreen.lua"/>
 		<sourceFile filename="src/shop/BuyVehicleData.lua"/>
 		<sourceFile filename="src/vehicles/Vehicle.lua"/>
+		<sourceFile filename="src/FileQueryEvent.lua"/>
+		<sourceFile filename="src/FileQueryManager.lua"/>
 		<sourceFile filename="src/FSBaseMission.lua"/>
 	</extraSourceFiles>
 	<l10n filenamePrefix="translations/translation"/>

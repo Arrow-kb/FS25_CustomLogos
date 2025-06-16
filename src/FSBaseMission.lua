@@ -13,6 +13,8 @@ function CL_FSBaseMission:onStartMission()
 	CustomLogoGizmoDialog.register()
 	FileExplorerDialog.register()
 
+	if not fileExists(g_currentModSettingsDirectory .. "arrowLogistics.dds") then copyFile(modDirectory .. "examples/arrowLogistics.dds", g_currentModSettingsDirectory .. "arrowLogistics.dds", true) end
+
 end
 
 FSBaseMission.onStartMission  = Utils.prependedFunction(FSBaseMission.onStartMission, CL_FSBaseMission.onStartMission)

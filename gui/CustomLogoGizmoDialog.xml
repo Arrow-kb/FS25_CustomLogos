@@ -11,23 +11,47 @@
 
 			<ScrollingLayout profile="cl_customLogoGizmoScrollingLayout" id="scrollingLayout" onScroll="onScrollLayoutScroll">
 
-				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_position"/>
+				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickIndex" id="indexOption"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_position" position="15px 0px"/>
 
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionX"/>
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionY"/>
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionZ"/>
 
-				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_scale"/>
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_scale" position="15px 0px"/>
 
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionSX"/>
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionSY"/>
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionSZ"/>
 
-				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_rotation"/>
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_rotation" position="15px 0px"/>
 
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionRX"/>
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionRY"/>
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionRZ"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_mirror" position="15px 0px"/>
+
+				<BinaryOption profile="fs25_settingsBinaryOption" id="mirrorButton" onClick="onClickMirror"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_mirrorX" position="15px 0px"/>
+				<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickMirrorOption" id="optionMirrorX"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_mirrorY" position="15px 0px"/>
+				<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickMirrorOption" id="optionMirrorY"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_mirrorZ" position="15px 0px"/>
+				<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickMirrorOption" id="optionMirrorZ"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_mirrorRX" position="15px 0px"/>
+				<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickMirrorOption" id="optionMirrorRX"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_mirrorRY" position="15px 0px"/>
+				<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickMirrorOption" id="optionMirrorRY"/>
+
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_mirrorRZ" position="15px 0px"/>
+				<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickMirrorOption" id="optionMirrorRZ"/>
 				
 			</ScrollingLayout>
 
@@ -40,10 +64,12 @@
 		
 		<BoxLayout profile="fs25_dialogButtonBox">
 			<Button profile="buttonOK" text="$l10n_button_ok" onClick="onClickOk"/>
+			<Button profile="buttonBack" text="$l10n_button_delete" onClick="onClickDelete"/>
 		</BoxLayout>
 	</GuiElement>
 
 	<GUIProfiles>
+		
 		<Profile name="cl_customLogoGizmoScrollingLayout" extends="emptyPanel" with="anchorStretchingYCenter">
 			<flowDirection value="vertical"/>
 			<autoValidateLayout value="false"/>
@@ -53,6 +79,7 @@
 		<Profile name="cl_dialogFullscreenBg" extends="baseReference" with="anchorStretchingYStretchingX">
 			<imageColor value="$preset_colorTransparent"/>
 		</Profile>
+		
 	</GUIProfiles>
 
 </GUI>

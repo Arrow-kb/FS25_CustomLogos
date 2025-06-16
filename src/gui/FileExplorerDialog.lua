@@ -108,9 +108,12 @@ function FileExplorerDialog:onClickOk()
 
     self:close()
 
-    local name = self.currentFolder.files[self.fileList.selectedIndex - #self.currentFolder.folders]
+    local file = self.currentFolder.files[self.fileList.selectedIndex - #self.currentFolder.folders]
 
-    if name ~= nil and self.callback ~= nil then
+    local name = file.name
+    local valid = file.valid
+
+    if name ~= nil and self.callback ~= nil and valid then
 
         if self.target ~= nil then
             self.callback(self.target, self.currentFolder.path .. "/" .. name)
@@ -154,6 +157,7 @@ function FileExplorerDialog:update(dT)
         end
 
         self.fileList:setSize(size[1] * 0.95, self.fileListSlider.size[2] - self.topPanel.size[2] + self.fileListOffset)
+        self.pathText:setSize(size[1] * 0.7275)
 
         self.cellSize = size[1] * 0.95
 
@@ -220,25 +224,47 @@ function FileExplorerDialog:populateCellForItemInSection(list, section, index, c
 	    cell:getAttribute("name"):setText(folder.name)
         cell:getAttribute("icon"):setImageSlice(nil, "custom_logos.folder")
 
-        cell.onClickCallback = function()
+        cell:setDisabled(g_server == nil or g_server.netIsRunning)
 
-            self.currentFolder = folder
-            table.insert(self.currentFolderPath, index)
+        if g_server == nil or g_server.netIsRunning then
 
-            self.pathText:setText(folder.path)
+            cell.onClickCallback = function() end
 
-            if folder.path == "C:/Users/tomsu/Documents/exampleFolder" then self.pathText:setText("C:/Users/Arrow/Documents/exampleFolder") end
+        else
 
-            self.fileList:reloadData()
+            cell.onClickCallback = function()
+
+                self.currentFolder = folder
+                table.insert(self.currentFolderPath, index)
+
+                self.pathText:setText(folder.path)
+
+                self.fileList:reloadData()
+
+            end
 
         end
 
     else
 
-        local name = self.currentFolder.files[index - #self.currentFolder.folders]
+        local name = self.currentFolder.files[index - #self.currentFolder.folders].name
         local extension = string.sub(name, #name - 2)
 
-        cell:getAttribute("name"):setText(name)
+        local valid = ""
+
+        if not self.currentFolder.files[index - #self.currentFolder.folders].valid then
+
+            valid = " - " .. g_i18n:getText("cl_invalidFile")
+
+            cell:setDisabled(true)
+
+        else
+
+            cell:setDisabled(false)
+
+        end
+
+        cell:getAttribute("name"):setText(name .. valid)
         cell:getAttribute("icon"):setImageSlice(nil, "custom_logos." .. extension)
 
         cell.onClickCallback = function() end

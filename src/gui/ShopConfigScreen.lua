@@ -10,6 +10,9 @@ for i = 1, #modSettingsDirectoryPath - 5 do
 
 end
 
+if g_server == nil or g_server.netIsRunning then baseDirectory = g_currentModSettingsDirectory end
+createFolder(g_currentModSettingsDirectory)
+
 
 CL_ShopConfigScreen.SUPPORTED_EXTENSIONS = {
 	[".png"] = true,
@@ -34,7 +37,24 @@ local function getFilesRecursively(path, parent)
 
 		local name = file.filename
 
-		if #name >= 4 and CL_ShopConfigScreen.SUPPORTED_EXTENSIONS[string.sub(name, #name - 3)] then table.insert(parent.files, name) end
+		if #name >= 4 and CL_ShopConfigScreen.SUPPORTED_EXTENSIONS[string.sub(name, #name - 3)] then table.insert(parent.files, { ["name"] = name, ["valid"] = true }) end
+
+	end
+
+end
+
+
+local function validateFilesRecursively(files, manager)
+
+	for _, folder in pairs(files.folders) do
+
+		validateFilesRecursively(folder, manager)
+
+	end
+
+	for _, file in pairs(files.files) do
+
+		manager:sendQuery(file.name, function(target, filename, response) file.valid = response end, self)
 
 	end
 
@@ -56,6 +76,8 @@ function ShopConfigScreen:setupCustomLogoButton()
     self.moveCLButton.onClickCallback = self.onClickMoveCustomLogo
 	self.moveCLButton:setVisible(false)
 
+	self.customLogos = {}
+
     self.buttonsPanel:invalidateLayout()
 
 end
@@ -67,17 +89,80 @@ function CL_ShopConfigScreen:setStoreItem(storeItem, vehicle, saleItem, basePric
 
 	getFilesRecursively(baseDirectory, self.files[1])
 
+	if g_server == nil then validateFilesRecursively(self.files[1], g_fileQueryManager) end
+
+	self.customLogos = {}
+
 end
 
 ShopConfigScreen.setStoreItem = Utils.appendedFunction(ShopConfigScreen.setStoreItem, CL_ShopConfigScreen.setStoreItem)
 
 
-function ShopConfigScreen:onClickCustomLogo()
+function CL_ShopConfigScreen:onVehiclesLoaded(vehicles, state)
 
-	if self.customLogoNode ~= nil then
-		delete(self.customLogoNode)
-		self.customLogoNode = nil
+	local logos = table.clone(self.customLogos)
+
+	self.customLogos = {}
+
+	if state ~= VehicleLoadingState.OK then return end
+
+	local rootNode = vehicles[1].rootNode
+
+	if #logos > 0 then
+
+		for _, logo in pairs(logos) do
+
+			link(rootNode, logo.node)
+
+			if logo.mirror ~= nil then link(rootNode, logo.mirror.node) end
+
+		end
+
+	elseif self.vehicle ~= nil and self.vehicle.customLogos ~= nil then
+
+		for _, logo in pairs(self.vehicle.customLogos) do
+
+			local node = clone(logo.node, false)
+
+			link(rootNode, node)
+
+			local previewLogo = {
+				["node"] = node,
+				["filename"] = logo.filename
+			}
+
+			if logo.mirror ~= nil then
+
+				local mirrorNode = clone(logo.mirror.node, false)
+				link(rootNode, mirrorNode)
+
+				previewLogo.mirror = {
+					["node"] = mirrorNode,
+					["x"] = logo.mirror.x,
+					["y"] = logo.mirror.y,
+					["z"] = logo.mirror.z,
+					["rx"] = logo.mirror.rx,
+					["ry"] = logo.mirror.ry,
+					["rz"] = logo.mirror.rz
+				}
+
+			end
+
+			table.insert(logos, previewLogo)
+
+		end
+
 	end
+
+	self.customLogos = logos
+	self.moveCLButton:setVisible(#self.customLogos > 0)
+
+end
+
+ShopConfigScreen.onVehiclesLoaded = Utils.appendedFunction(ShopConfigScreen.onVehiclesLoaded, CL_ShopConfigScreen.onVehiclesLoaded)
+
+
+function ShopConfigScreen:onClickCustomLogo()
 
 	FileExplorerDialog.show(self.files, baseDirectory, self.onCustomLogoCallback, self)
 
@@ -86,7 +171,7 @@ end
 
 function ShopConfigScreen:onClickMoveCustomLogo()
 
-	CustomLogoGizmoDialog.show(self.customLogoNode)
+	CustomLogoGizmoDialog.show(self.customLogos)
 
 end
 
@@ -106,8 +191,10 @@ function ShopConfigScreen:onCustomLogoCallback(path)
 
 	setMaterialDiffuseMapFromFile(materialId, path, false, true, true)
 
-	self.customLogoNode = node
-	self.customLogoFilename = path
+	table.insert(self.customLogos, {
+		["node"] = node,
+		["filename"] = path
+	})
 
 	self.moveCLButton:setVisible(true)
 	self.buttonsPanel:invalidateLayout()
@@ -117,7 +204,7 @@ end
 
 function CL_ShopConfigScreen:updateButtons()
 
-	self.moveCLButton:setVisible(self.customLogoNode ~= nil)
+	self.moveCLButton:setVisible(#self.customLogos > 0)
 
 end
 
@@ -126,9 +213,15 @@ ShopConfigScreen.updateButtons = Utils.prependedFunction(ShopConfigScreen.update
 
 function CL_ShopConfigScreen:onClose()
 
-	if self.customLogoNode ~= nil then delete(self.customLogoNode) end
+	for _, logo in pairs(self.customLogos) do
 
-	self.customLogoNode = nil
+		delete(logo.node)
+
+		if logo.mirror ~= nil then delete(logo.mirror.node) end
+
+	end
+
+	self.customLogos = {}
 
 end
 

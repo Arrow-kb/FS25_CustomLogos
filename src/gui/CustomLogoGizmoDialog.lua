@@ -14,11 +14,11 @@ function CustomLogoGizmoDialog.register()
 end
 
 
-function CustomLogoGizmoDialog.show(node)
+function CustomLogoGizmoDialog.show(logos)
 
     if CustomLogoGizmoDialog.INSTANCE ~= nil then
 
-        CustomLogoGizmoDialog.INSTANCE.node = node
+        CustomLogoGizmoDialog.INSTANCE.logos = logos or {}
         g_gui:showDialog("CustomLogoGizmoDialog")
 
     end
@@ -30,7 +30,7 @@ function CustomLogoGizmoDialog.new(target, customMt)
 
     local self = MessageDialog.new(target, customMt or CustomLogoGizmoDialog_mt)
 
-    self.node = 0
+    self.logos = {}
 
     return self
 
@@ -40,7 +40,7 @@ end
 function CustomLogoGizmoDialog.createFromExistingGui(gui, _)
 
     CustomLogoGizmoDialog.register()
-    CustomLogoGizmoDialog.show(gui.node)
+    CustomLogoGizmoDialog.show(gui.logos)
 
 end
 
@@ -69,6 +69,15 @@ function CustomLogoGizmoDialog:onGuiSetupFinished()
         [self.optionRZ] = { ["getFunction"] = getRotation, ["setFunction"] = setRotation, ["target"] = 3, ["targetLiteral"] = "rz" }
     }
 
+    self.mirrorOptions = {
+        [self.optionMirrorX] = { ["getFunction"] = getTranslation, ["setFunction"] = setTranslation, ["target"] = 1, ["targetLiteral"] = "x" },
+        [self.optionMirrorY] = { ["getFunction"] = getTranslation, ["setFunction"] = setTranslation, ["target"] = 2, ["targetLiteral"] = "y" },
+        [self.optionMirrorZ] = { ["getFunction"] = getTranslation, ["setFunction"] = setTranslation, ["target"] = 3, ["targetLiteral"] = "z" },
+        [self.optionMirrorRX] = { ["getFunction"] = getRotation, ["setFunction"] = setRotation, ["target"] = 1, ["targetLiteral"] = "rx" },
+        [self.optionMirrorRY] = { ["getFunction"] = getRotation, ["setFunction"] = setRotation, ["target"] = 2, ["targetLiteral"] = "ry" },
+        [self.optionMirrorRZ] = { ["getFunction"] = getRotation, ["setFunction"] = setRotation, ["target"] = 3, ["targetLiteral"] = "rz" }
+    }
+
 end
 
 
@@ -76,9 +85,75 @@ function CustomLogoGizmoDialog:onOpen()
 
     CustomLogoGizmoDialog:superClass().onOpen(self)
 
-    local x, y, z = getTranslation(self.node)
-    local sx, sy, sz = getScale(self.node)
-    local rx, ry, rz = getRotation(self.node)
+    self.index = 1
+
+    local logos = self.logos
+
+    local texts = {}
+
+    for _, logo in pairs(logos) do
+
+        local name = string.sub(logo.filename, string.findLast(logo.filename, "/") + 1)
+        table.insert(texts, name)
+
+    end
+
+    self.indexOption:setTexts(texts)
+    self.indexOption:setState(1)
+
+    self:onClickIndex(1)
+
+end
+
+
+function CustomLogoGizmoDialog:onClickOk()
+
+    self:close()
+
+end
+
+
+function CustomLogoGizmoDialog:onClickOption(state, button)
+
+    local option = self.options[button]
+    local logo = self.logos[self.index]
+
+    local value = -10 + 0.01 * (state - 1)
+
+    local x, y, z = option.getFunction(logo.node)
+
+    local values = table.pack(x, y, z)
+
+    values[option.target] = value
+
+    option.setFunction(logo.node, unpack(values))
+
+    if logo.mirror ~= nil then
+
+        for _, mirrorOption in pairs(self.mirrorOptions) do
+
+            if mirrorOption.getFunction ~= option.getFunction then continue end
+
+            values[mirrorOption.target] = values[mirrorOption.target] * (logo.mirror[mirrorOption.targetLiteral] and -1 or 1)
+
+        end
+
+        option.setFunction(logo.mirror.node, unpack(values))
+
+    end
+
+end
+
+
+function CustomLogoGizmoDialog:onClickIndex(index)
+
+    self.index = index
+
+    local logo = self.logos[index]
+
+    local x, y, z = getTranslation(logo.node)
+    local sx, sy, sz = getScale(logo.node)
+    local rx, ry, rz = getRotation(logo.node)
 
     local values = { ["x"] = x, ["y"] = y, ["z"] = z, ["sx"] = sx, ["sy"] = sy, ["sz"] = sz, ["rx"] = rx, ["ry"] = ry, ["rz"] = rz}
 
@@ -97,35 +172,117 @@ function CustomLogoGizmoDialog:onOpen()
 
     end
 
-end
+    self.mirrorButton:setState(logo.mirror == nil and 1 or 2)
 
+    for button, option in pairs(self.mirrorOptions) do
 
-function CustomLogoGizmoDialog:onClose()
+        button:setDisabled(logo.mirror == nil)
+        button:setState((logo.mirror == nil or not logo.mirror[option.targetLiteral]) and 1 or 2)
 
-    CustomLogoGizmoDialog:superClass().onClose(self)
-
-end
-
-
-function CustomLogoGizmoDialog:onClickOk()
-
-    self:close()
+    end
 
 end
 
 
-function CustomLogoGizmoDialog:onClickOption(state, button)
+function CustomLogoGizmoDialog:onClickMirror(state)
 
-    local option = self.options[button]
+    local logo = self.logos[self.index]
 
-    local value = -10 + 0.01 * (state - 1)
+    for button, _ in pairs(self.mirrorOptions) do
 
-    local x, y, z = option.getFunction(self.node)
+        button:setDisabled(state == 1)
+        button:setState(1)
 
+    end
+
+    if state == 1 then
+
+        if logo.mirror ~= nil then delete(logo.mirror.node) end
+
+        logo.mirror = nil
+        return
+
+    end
+
+    local node = clone(logo.node, true)
+
+    logo.mirror = {
+        ["node"] = node,
+        ["x"] = false,
+        ["y"] = false,
+        ["z"] = false,
+        ["rx"] = false,
+        ["ry"] = false,
+        ["rz"] = false
+    }
+
+end
+
+
+function CustomLogoGizmoDialog:onClickMirrorOption(state, button)
+
+    local logo = self.logos[self.index]
+
+    if logo.mirror == nil then return end
+
+    local option = self.mirrorOptions[button]
+    logo.mirror[option.targetLiteral] = not logo.mirror[option.targetLiteral]
+
+    local x, y, z = option.getFunction(logo.node)
     local values = table.pack(x, y, z)
 
-    values[option.target] = value
+    for _, b in pairs(self.mirrorOptions) do
 
-    option.setFunction(self.node, unpack(values))
+        if b.getFunction ~= option.getFunction then continue end
+
+        if b.getFunction == getRotation then
+
+            if not logo.mirror[b.targetLiteral] then continue end
+
+            values[b.target] = math.pi + values[b.target]
+
+            continue
+
+        end
+
+        values[b.target] = values[b.target] * (logo.mirror[b.targetLiteral] and -1 or 1)
+
+    end
+
+    option.setFunction(logo.mirror.node, unpack(values))
+
+end
+
+
+function CustomLogoGizmoDialog:onClickDelete()
+
+    local logo = self.logos[self.index]
+
+    delete(logo.node)
+
+    if logo.mirror ~= nil then delete(logo.mirror.node) end
+
+    table.remove(self.logos, self.index)
+
+    if #self.logos == 0 then
+        self:close()
+        g_shopConfigScreen.moveCLButton:setVisible(false)
+        return
+    end
+
+    local texts = {}
+
+    for _, logo in pairs(self.logos) do
+
+        local name = string.sub(logo.filename, string.findLast(logo.filename, "/") + 1)
+        table.insert(texts, name)
+
+    end
+
+    self.indexOption:setTexts(texts)
+
+    local index = math.max(self.index - 1, 1)
+    self:onClickIndex(index)
+    self.indexOption:setState(index)
 
 end

@@ -6,6 +6,14 @@
 		<text name="cl_rotation" text="Rotation"/>
 		<text name="cl_customLogo" text="Logo personnalisé"/>
 		<text name="cl_moveLogo" text="Déplacer le logo"/>
+		<text name="cl_mirror" text="Miroir"/>
+		<text name="cl_mirrorX" text="Position du miroir X"/>
+		<text name="cl_mirrorY" text="Position du miroir Y"/>
+		<text name="cl_mirrorZ" text="Position du miroir Z"/>
+		<text name="cl_mirrorRX" text="Rotation du miroir X"/>
+		<text name="cl_mirrorRY" text="Rotation du miroir Y"/>
+		<text name="cl_mirrorRZ" text="Rotation du miroir Z"/>
+		<text name="cl_invalidFile" text="non présent sur le serveur"/>
 
 	</texts>
 </l10n>
