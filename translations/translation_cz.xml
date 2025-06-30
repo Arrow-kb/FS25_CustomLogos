@@ -1,0 +1,19 @@
+<l10n>
+	<texts>
+
+		<text name="cl_position" text="Pozice"/>
+		<text name="cl_scale" text="Měřítko"/>
+		<text name="cl_rotation" text="Otočení"/>
+		<text name="cl_customLogo" text="Vlastní logo"/>
+		<text name="cl_moveLogo" text="Posunout logo"/>
+		<text name="cl_mirror" text="Zrcadlení"/>
+		<text name="cl_mirrorX" text="Zrcadlit v pozici X"/>
+		<text name="cl_mirrorY" text="Zrcadlit v pozici Y"/>
+		<text name="cl_mirrorZ" text="Zrcadlit v pozici Z"/>
+		<text name="cl_mirrorRX" text="Zrcadlit otočení X"/>
+		<text name="cl_mirrorRY" text="Zrcadlit otočení Y"/>
+		<text name="cl_mirrorRZ" text="Zrcadlit otočení Z"/>
+		<text name="cl_invalidFile" text="not present on server"/>
+
+	</texts>
+</l10n>
