@@ -1,6 +1,6 @@
 <modDesc descVersion="99">
     <author>Arrow</author>
-    <version>1.1.0.0</version>
+    <version>1.2.0.0</version>
     <title>
         <en>Custom Logos</en>
         <de>Benutzerdefinierte Logos</de>
@@ -18,13 +18,8 @@ For use on servers, it is required to upload the images to the server and to all
 
 Changelog:
 
-1.1.0.0
-- Added ability to mirror images
-- Added ability to add multiple images
-- Added ability to add images when editing existing vehicles
-- Added ability to remove images
-- Added multiplayer support
-]]>
+1.2.0.0
+- Images can now be linked to different parts of the vehicle, allowing them to move in tandem with Interactive Control functions]]>
 </en>
 <de>
     <![CDATA[ Mit diesem Mod können Sie beim Kauf eines neuen Fahrzeugs im Shop oder beim Modifizieren eines bestehenden Fahrzeugs mithilfe eines einfachen benutzerdefinierten Datei-Explorers im Spiel ein benutzerdefiniertes Bild auf jedes Fahrzeug anwenden, um Ihre Fahrzeuge mit Ihrem eigenen Logo zu versehen. Bilder können entsprechend verschoben, skaliert, gedreht und gespiegelt werden.
@@ -49,6 +44,7 @@ Pour une utilisation sur des serveurs, il est nécessaire de télécharger les i
     <multiplayer supported="true"/>
 	<extraSourceFiles>
 		<sourceFile filename="src/events/ChangeVehicleConfigEvent.lua"/>
+		<sourceFile filename="src/gui/elements/ExtendedMultiTextOptionElement.lua"/>
 		<sourceFile filename="src/gui/CustomLogoGizmoDialog.lua"/>
 		<sourceFile filename="src/gui/FileExplorerDialog.lua"/>
 		<sourceFile filename="src/gui/ShopConfigScreen.lua"/>

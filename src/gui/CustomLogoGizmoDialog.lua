@@ -14,11 +14,12 @@ function CustomLogoGizmoDialog.register()
 end
 
 
-function CustomLogoGizmoDialog.show(logos)
+function CustomLogoGizmoDialog.show(logos, vehicle)
 
     if CustomLogoGizmoDialog.INSTANCE ~= nil then
 
         CustomLogoGizmoDialog.INSTANCE.logos = logos or {}
+        CustomLogoGizmoDialog.INSTANCE.vehicle = vehicle
         g_gui:showDialog("CustomLogoGizmoDialog")
 
     end
@@ -81,11 +82,32 @@ function CustomLogoGizmoDialog:onGuiSetupFinished()
 end
 
 
+local function getNodesRecursively(parent, nodes, parentIsRoot)
+
+    local numChildren = getNumOfChildren(parent.node)
+
+    for i = 0, numChildren - 1 do
+
+        local node = getChildAt(parent.node, i)
+        local child = { ["node"] = node, ["name"] = getName(node), ["path"] = parent.path .. (parentIsRoot and "" or "|") .. i }
+
+        table.insert(nodes, child)
+
+        getNodesRecursively(child, nodes, false)
+
+    end
+
+    return true
+
+end
+
+
 function CustomLogoGizmoDialog:onOpen()
 
     CustomLogoGizmoDialog:superClass().onOpen(self)
 
     self.index = 1
+    self.nodes = {}
 
     local logos = self.logos
 
@@ -95,6 +117,40 @@ function CustomLogoGizmoDialog:onOpen()
 
         local name = string.sub(logo.filename, string.findLast(logo.filename, "/") + 1)
         table.insert(texts, name)
+
+    end
+
+    if self.vehicle ~= nil then
+
+        self.nodes = { { ["node"] = self.vehicle, ["name"] = getName(self.vehicle), ["path"] = "0|" } }
+
+        local success = getNodesRecursively(self.nodes[1], self.nodes, true)
+        local names = {}
+
+        for i = #self.nodes, 1, -1 do
+
+            local name = self.nodes[i].name
+            local node = self.nodes[i].node
+
+            if string.contains(name, ".wav") or string.contains(name, ".gls") then
+                table.remove(self.nodes, i)
+                continue
+            end
+
+            for _, logo in pairs(logos) do
+                if logo.node == node then
+                    table.remove(self.nodes, i)
+                    break
+                end
+            end
+
+        end
+
+        table.sort(self.nodes, function(a, b) return a.name < b.name end)
+
+        for _, node in pairs(self.nodes) do table.insert(names, node.name) end
+
+        self.linkOption:setTexts(names)
 
     end
 
@@ -109,6 +165,17 @@ end
 function CustomLogoGizmoDialog:onClickOk()
 
     self:close()
+
+end
+
+
+function CustomLogoGizmoDialog:onClickLink(state)
+
+    local logo = self.logos[self.index]
+    local node = self.nodes[state].node
+
+    link(node, logo.node)
+    logo.parent = self.nodes[state].path
 
 end
 
@@ -150,6 +217,17 @@ function CustomLogoGizmoDialog:onClickIndex(index)
     self.index = index
 
     local logo = self.logos[index]
+
+    self.linkOption:setState(1)
+
+    for i, node in pairs(self.nodes) do
+
+        if node.path == logo.parent then
+            self.linkOption:setState(i)
+            break
+        end
+
+    end
 
     local x, y, z = getTranslation(logo.node)
     local sx, sy, sz = getScale(logo.node)

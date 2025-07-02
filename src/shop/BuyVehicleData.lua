@@ -17,7 +17,8 @@ function CL_BuyVehicleData:setStoreItem(storeItem)
 			["position"] = { x, y, z },
 			["scale"] = { sx, sy, sz },
 			["rotation"] = { rx, ry, rz },
-			["filename"] = logo.filename
+			["filename"] = logo.filename,
+			["parent"] = logo.parent
 		}
 
 		if logo.mirror ~= nil then
@@ -78,11 +79,14 @@ function CL_BuyVehicleData:readStream(streamId, connection)
 		local ry = streamReadFloat32(streamId)
 		local rz = streamReadFloat32(streamId)
 
+		local parent = streamReadString(streamId)
+
 		local logo = {
 			["filename"] = g_currentModSettingsDirectory .. filename,
 			["position"] = { x, y, z },
 			["scale"] = { sx, sy, sz },
-			["rotation"] = { rx, ry, rz }
+			["rotation"] = { rx, ry, rz },
+			["parent"] = parent
 		}
 
 		local isMirrored = streamReadBool(streamId)
@@ -140,6 +144,8 @@ function CL_BuyVehicleData:writeStream(streamId, connection)
 			streamWriteFloat32(streamId, logo.rotation[1])
 			streamWriteFloat32(streamId, logo.rotation[2])
 			streamWriteFloat32(streamId, logo.rotation[3])
+
+			streamWriteStream(streamId, logo.parent or "0|")
 
 			streamWriteBool(streamId, logo.mirror ~= nil)
 

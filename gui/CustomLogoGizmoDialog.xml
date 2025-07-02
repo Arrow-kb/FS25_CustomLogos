@@ -13,6 +13,10 @@
 
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickIndex" id="indexOption"/>
 
+				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_link" position="15px 0px"/>
+
+				<ExtendedMultiTextOption profile="cl_extendedMultiTextOption" onClick="onClickLink" id="linkOption"/>
+
 				<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_cl_position" position="15px 0px"/>
 
 				<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickOption" id="optionX"/>

@@ -2,4 +2,37 @@
 	<Profile name="clButtonMenuExtra2" extends="fs25_wideButton" with="touchButton">
 		<inputAction value="MENU_EXTRA_2"/>
 	</Profile>
+
+	<Profile name="cl_extendedMultiTextOption" extends="fs25_settingsMultiTextOption">
+		<defaultProfileButtonLeft value="cl_defaultProfileButtonLeft"/>
+		<defaultProfileButtonRight value="cl_defaultProfileButtonRight"/>
+		<defaultProfileButtonFirst value="cl_defaultProfileButtonFirst"/>
+		<defaultProfileButtonLast value="cl_defaultProfileButtonLast"/>
+		<defaultProfileText value="cl_defaultProfileText"/>
+	</Profile>
+
+	<Profile name="cl_defaultProfileButtonLeft" extends="fs25_multiTextOptionLeft">
+		<size value="26px 100%"/>
+		<position value="26px 0px"/>
+	</Profile>
+
+	<Profile name="cl_defaultProfileButtonRight" extends="fs25_multiTextOptionRight">
+		<size value="26px 100%"/>
+		<position value="-26px 0px"/>
+	</Profile>
+
+	<Profile name="cl_defaultProfileButtonFirst" extends="cl_defaultProfileButtonLeft">
+		<iconSliceId value="cl_gui_elements.doubleArrow"/>
+		<iconSize value="12px 13px"/>
+		<position value="0px 0px"/>
+	</Profile>
+
+	<Profile name="cl_defaultProfileButtonLast" extends="cl_defaultProfileButtonFirst" with="anchorStretchingYRight">
+		<iconRotation value="0"/>
+		<position value="0px 0px"/>
+	</Profile>
+
+	<Profile name="cl_defaultProfileText" extends="fs25_multiTextOptionText">
+		<absoluteSizeOffset value="75px 0px"/>
+	</Profile>
 </GUIProfiles>

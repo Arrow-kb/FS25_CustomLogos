@@ -110,6 +110,8 @@ function FileExplorerDialog:onClickOk()
 
     local file = self.currentFolder.files[self.fileList.selectedIndex - #self.currentFolder.folders]
 
+    if file == nil then return end
+
     local name = file.name
     local valid = file.valid
 

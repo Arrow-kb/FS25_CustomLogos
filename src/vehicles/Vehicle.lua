@@ -39,7 +39,18 @@ function Vehicle:setCustomLogoData(logos)
 
 		local node = loadI3DFile(modDirectory .. "i3d/emptyPlane.i3d")
 
-		link(self.rootNode or getChildAt(self.i3dNode, 0), node)
+		local rootNode = self.rootNode or getChildAt(self.i3dNode, 0)
+
+		local parent = rootNode
+		local parentPath = string.split(logo.parent, "|")
+
+		for pathIndex = 2, #parentPath do
+
+			parent = getChildAt(parent, tonumber(parentPath[pathIndex]))
+
+		end
+
+		link(parent, node)
 		setTranslation(node, unpack(logo.position))
 		setScale(node, unpack(logo.scale))
 		setRotation(node, unpack(logo.rotation))
@@ -96,6 +107,7 @@ function CL_Vehicle:saveToXMLFile(xmlFile, key)
 		xmlFile:setVector(logoKey .. "#position", logo.position)
 		xmlFile:setVector(logoKey .. "#scale", logo.scale)
 		xmlFile:setVector(logoKey .. "#rotation", logo.rotation)
+		xmlFile:setString(logoKey .. "#parent", logo.parent or "0|")
 
 		if logo.mirror ~= nil then
 
@@ -134,7 +146,8 @@ function CL_Vehicle:loadFinished()
 					["filename"] = xmlFile:getString(logoKey .. "#filename"),
 					["position"] = xmlFile:getVector(logoKey .. "#position"),
 					["scale"] = xmlFile:getVector(logoKey .. "#scale"),
-					["rotation"] = xmlFile:getVector(logoKey .. "#rotation")
+					["rotation"] = xmlFile:getVector(logoKey .. "#rotation"),
+					["parent"] = xmlFile:getString(logoKey .. "#parent", "0|")
 				}
 
 				if xmlFile:hasProperty(logoKey .. ".mirror") then
@@ -187,11 +200,14 @@ function CL_Vehicle:postReadStream(streamId, connection)
 		local ry = streamReadFloat32(streamId)
 		local rz = streamReadFloat32(streamId)
 
+		local parent = streamReadString(streamId)
+
 		local logo = {
 			["filename"] = g_currentModSettingsDirectory .. filename,
 			["position"] = { x, y, z },
 			["scale"] = { sx, sy, sz },
-			["rotation"] = { rx, ry, rz }
+			["rotation"] = { rx, ry, rz },
+			["parent"] = parent
 		}
 
 		local isMirrored = streamReadBool(streamId)
@@ -249,6 +265,8 @@ function CL_Vehicle:postWriteStream(streamId, connection)
 			streamWriteFloat32(streamId, logo.rotation[1])
 			streamWriteFloat32(streamId, logo.rotation[2])
 			streamWriteFloat32(streamId, logo.rotation[3])
+
+			streamWriteString(streamId, logo.parent or "0|")
 
 			streamWriteBool(streamId, logo.mirror ~= nil)
 

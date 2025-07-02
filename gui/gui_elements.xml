@@ -1,0 +1,9 @@
+<texture>
+	<meta>
+		<filename>gui_elements.png</filename>
+		<size width="64" height="64"/>
+	</meta>
+	<slices>
+		<slice id="doubleArrow" uvs="0px 0px 64px 64px"/>
+	</slices>
+</texture>

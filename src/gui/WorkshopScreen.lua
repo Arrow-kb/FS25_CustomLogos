@@ -18,7 +18,8 @@ function CL_WorkshopScreen:setConfigurations(vehicleBuyData, vehicleId)
 			["position"] = { x, y, z },
 			["scale"] = { sx, sy, sz },
 			["rotation"] = { rx, ry, rz },
-			["filename"] = logo.filename
+			["filename"] = logo.filename,
+			["parent"] = logo.parent
 		}
 
 		delete(logo.node)

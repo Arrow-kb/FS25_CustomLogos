@@ -123,18 +123,28 @@ function CL_ShopConfigScreen:onVehiclesLoaded(vehicles, state)
 		for _, logo in pairs(self.vehicle.customLogos) do
 
 			local node = clone(logo.node, false)
+			
+			local parent = rootNode
+			local parentPath = string.split(logo.parent, "|")
 
-			link(rootNode, node)
+			for pathIndex = 2, #parentPath do
+
+				parent = getChildAt(parent, tonumber(parentPath[pathIndex]))
+
+			end
+
+			link(parent, node)
 
 			local previewLogo = {
 				["node"] = node,
-				["filename"] = logo.filename
+				["filename"] = logo.filename,
+				["parent"] = logo.parent
 			}
 
 			if logo.mirror ~= nil then
 
 				local mirrorNode = clone(logo.mirror.node, false)
-				link(rootNode, mirrorNode)
+				link(parent, mirrorNode)
 
 				previewLogo.mirror = {
 					["node"] = mirrorNode,
@@ -171,7 +181,7 @@ end
 
 function ShopConfigScreen:onClickMoveCustomLogo()
 
-	CustomLogoGizmoDialog.show(self.customLogos)
+	CustomLogoGizmoDialog.show(self.customLogos, self.previewVehicles[1].rootNode)
 
 end
 
@@ -193,7 +203,8 @@ function ShopConfigScreen:onCustomLogoCallback(path)
 
 	table.insert(self.customLogos, {
 		["node"] = node,
-		["filename"] = path
+		["filename"] = path,
+		["parent"] = "0|"
 	})
 
 	self.moveCLButton:setVisible(true)
