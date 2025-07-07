@@ -1,6 +1,6 @@
 <modDesc descVersion="99">
     <author>Arrow</author>
-    <version>1.2.0.0</version>
+    <version>1.2.0.1</version>
     <title>
         <en>Custom Logos</en>
         <de>Benutzerdefinierte Logos</de>
@@ -18,8 +18,9 @@ For use on servers, it is required to upload the images to the server and to all
 
 Changelog:
 
-1.2.0.0
-- Images can now be linked to different parts of the vehicle, allowing them to move in tandem with Interactive Control functions]]>
+1.2.0.1
+- Images can now be linked to different parts of the vehicle, allowing them to move in tandem with Interactive Control functions
+- Fixed images sometimes not being found on multiplayer and creating a white square]]>
 </en>
 <de>
     <![CDATA[ Mit diesem Mod können Sie beim Kauf eines neuen Fahrzeugs im Shop oder beim Modifizieren eines bestehenden Fahrzeugs mithilfe eines einfachen benutzerdefinierten Datei-Explorers im Spiel ein benutzerdefiniertes Bild auf jedes Fahrzeug anwenden, um Ihre Fahrzeuge mit Ihrem eigenen Logo zu versehen. Bilder können entsprechend verschoben, skaliert, gedreht und gespiegelt werden.
@@ -28,7 +29,13 @@ Es wird empfohlen, ein DDS-Bild im BC3/DXT5-Format zu verwenden, idealerweise mi
 
 Informationen zum Mehrspielermodus:
 
-Für die Verwendung auf Servern müssen die Bilder auf den Server und alle Clients hochgeladen werden, und zwar in den Ordner „modSettings” unter „FS25_CustomLogos”. Bilder außerhalb des Ordners „modSettings” oder in einem Unterordner innerhalb des Ordners „modSettings” dieses Mods werden nicht erkannt. Ein Beispielbild finden Sie im Ordner „modSettings”, nachdem Sie den Mod zum ersten Mal geladen haben. ]]>
+Für die Verwendung auf Servern müssen die Bilder auf den Server und alle Clients hochgeladen werden, und zwar in den Ordner „modSettings” unter „FS25_CustomLogos”. Bilder außerhalb des Ordners „modSettings” oder in einem Unterordner innerhalb des Ordners „modSettings” dieses Mods werden nicht erkannt. Ein Beispielbild finden Sie im Ordner „modSettings”, nachdem Sie den Mod zum ersten Mal geladen haben.
+
+Änderungsprotokoll:
+
+1.2.0.1
+- Bilder können nun mit verschiedenen Teilen des Fahrzeugs verknüpft werden, sodass sie sich gemeinsam mit den interaktiven Steuerungsfunktionen bewegen können.
+- Es wurde ein Fehler behoben, durch den Bilder im Mehrspielermodus manchmal nicht gefunden wurden und ein weißes Quadrat angezeigt wurde.]]>
 </de>
 <fr>
     <![CDATA[ Ce mod vous permet d'ajouter une image personnalisée à n'importe quel véhicule à l'aide d'un simple explorateur de fichiers intégré au jeu lorsque vous achetez un nouveau véhicule dans la boutique ou modifiez un véhicule existant, afin d'apposer votre propre logo sur vos véhicules. Les images peuvent être déplacées, redimensionnées, pivotées et reflétées selon vos besoins.
@@ -37,7 +44,13 @@ Il est recommandé d'utiliser une image DDS enregistrée au format BC3/DXT5, id�
 
 Informations multijoueur :
 
-Pour une utilisation sur des serveurs, il est nécessaire de télécharger les images sur le serveur et sur tous les clients, dans le dossier modSettings sous « FS25_CustomLogos ». Toute image située en dehors du dossier modSettings ou dans un sous-dossier du dossier modSettings de ce mod ne sera pas reconnue. Un exemple d'image est fourni dans le dossier modSettings après le premier chargement du mod. ]]>
+Pour une utilisation sur des serveurs, il est nécessaire de télécharger les images sur le serveur et sur tous les clients, dans le dossier modSettings sous « FS25_CustomLogos ». Toute image située en dehors du dossier modSettings ou dans un sous-dossier du dossier modSettings de ce mod ne sera pas reconnue. Un exemple d'image est fourni dans le dossier modSettings après le premier chargement du mod.
+
+Journal des modifications :
+
+1.2.0.1
+- Les images peuvent désormais être associées à différentes parties du véhicule, ce qui leur permet de se déplacer en tandem avec les fonctions de contrôle interactif.
+- Correction d'un bug qui empêchait parfois les images d'apparaître en mode multijoueur et créait un carré blanc.]]>
 </fr>
     </description>
     <iconFilename>icon_CustomLogos.dds</iconFilename>

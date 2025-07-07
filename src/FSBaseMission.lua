@@ -1,6 +1,7 @@
 CL_FSBaseMission = {}
 
 local modDirectory = g_currentModDirectory
+local modSettingsDirectory = g_currentModSettingsDirectory
 
 
 function CL_FSBaseMission:onStartMission()
@@ -14,7 +15,7 @@ function CL_FSBaseMission:onStartMission()
 	CustomLogoGizmoDialog.register()
 	FileExplorerDialog.register()
 
-	if not fileExists(g_currentModSettingsDirectory .. "arrowLogistics.dds") then copyFile(modDirectory .. "examples/arrowLogistics.dds", g_currentModSettingsDirectory .. "arrowLogistics.dds", true) end
+	if not fileExists(modSettingsDirectory .. "arrowLogistics.dds") then copyFile(modDirectory .. "examples/arrowLogistics.dds", modSettingsDirectory .. "arrowLogistics.dds", true) end
 
 end
 

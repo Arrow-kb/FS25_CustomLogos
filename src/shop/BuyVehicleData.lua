@@ -1,5 +1,7 @@
 CL_BuyVehicleData = {}
 
+local modSettingsDirectory = g_currentModSettingsDirectory
+
 
 function CL_BuyVehicleData:setStoreItem(storeItem)
 
@@ -82,7 +84,7 @@ function CL_BuyVehicleData:readStream(streamId, connection)
 		local parent = streamReadString(streamId)
 
 		local logo = {
-			["filename"] = g_currentModSettingsDirectory .. filename,
+			["filename"] = modSettingsDirectory .. filename,
 			["position"] = { x, y, z },
 			["scale"] = { sx, sy, sz },
 			["rotation"] = { rx, ry, rz },

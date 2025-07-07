@@ -1,7 +1,7 @@
 <l10n>
 	<texts>
 
-		<text name="cl_link" text="Link"/>
+		<text name="cl_link" text="Lien"/>
 		<text name="cl_position" text="Poste"/>
 		<text name="cl_scale" text="Échelle"/>
 		<text name="cl_rotation" text="Rotation"/>

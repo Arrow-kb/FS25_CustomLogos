@@ -2,6 +2,7 @@ CL_Vehicle = {}
 
 
 local modDirectory = g_currentModDirectory
+local modSettingsDirectory = g_currentModSettingsDirectory
 
 
 function Vehicle:setCustomLogoData(logos)
@@ -203,7 +204,7 @@ function CL_Vehicle:postReadStream(streamId, connection)
 		local parent = streamReadString(streamId)
 
 		local logo = {
-			["filename"] = g_currentModSettingsDirectory .. filename,
+			["filename"] = modSettingsDirectory .. filename,
 			["position"] = { x, y, z },
 			["scale"] = { sx, sy, sz },
 			["rotation"] = { rx, ry, rz },

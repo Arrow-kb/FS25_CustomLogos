@@ -1,7 +1,8 @@
 CL_ShopConfigScreen = {}
 
 local modDirectory = g_currentModDirectory
-local modSettingsDirectoryPath = string.split(g_currentModSettingsDirectory, "/")
+local modSettingsDirectory = g_currentModSettingsDirectory
+local modSettingsDirectoryPath = string.split(modSettingsDirectory, "/")
 local baseDirectory = ""
 
 for i = 1, #modSettingsDirectoryPath - 5 do
@@ -10,8 +11,8 @@ for i = 1, #modSettingsDirectoryPath - 5 do
 
 end
 
-if g_server == nil or g_server.netIsRunning then baseDirectory = g_currentModSettingsDirectory end
-createFolder(g_currentModSettingsDirectory)
+if g_server == nil or g_server.netIsRunning then baseDirectory = modSettingsDirectory end
+createFolder(modSettingsDirectory)
 
 
 CL_ShopConfigScreen.SUPPORTED_EXTENSIONS = {
